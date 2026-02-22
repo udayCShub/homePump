@@ -70,13 +70,12 @@ function setUpHtml(sensors, logics){
     operationsContainer.innerHTML = operationsHtml;
     operationsContainer.querySelector('.callingBell').onclick = ()=>{
         if(sensors.topTankLL & !sensors.topTankHL) fbUpdate(ref(db, "/logics"), !logics.topDemand);
-        alert();
     }
 }
 
 async function fbUpdate(fbRef, myVal){
     await update(fbRef, {
-        topDemand : myVal
-        trip : false;
+        topDemand : myVal,
+        trip : false
     });
 }

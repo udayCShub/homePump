@@ -1,0 +1,36 @@
+body{
+    background-color: white;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.sensorsContainer{
+    margin-top: 10px;
+}
+
+.logicsContainer {
+    margin-top: 20px;
+}
+
+.operationsContainer{
+    margin-top: 20px;
+    position: relative;
+}
+
+.callingBell{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: none;
+    background-color: red;
+    color: white;
+    cursor: pointer;
+}
+.callingBell:hover{
+    background-color: green;
+}
+.callingBell:active{
+    background-color: yellow;
+}

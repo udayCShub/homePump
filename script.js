@@ -19,21 +19,14 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const auth = getAuth(app);
 
-let rtdbObj;
-const sensorsContainer = document.querySelector('.sensorsContainer');
-const logicsContainer = document.querySelector('.logicsContainer');
-const operationsContainer = document.querySelector('.operationsContainer');
+const dataRef = ref(db, "/all");
 
 signInWithEmailAndPassword(auth, "udayuvrohit@gmail.com", "fantasy@12")
 .then(() => {
     console.log("Logged in");
-    const dataRef = ref(db, "/");
     onValue(dataRef, (snapshot) => {
         const fbData = snapshot.val()
-        const sensors = fbData.sensors;
-        const logics = fbData.logics;
-
-        setUpHtml(sensors, logics);
+        setUpApp(fbData);
     });
 })
 .catch((error) => {
@@ -41,41 +34,82 @@ signInWithEmailAndPassword(auth, "udayuvrohit@gmail.com", "fantasy@12")
 });
 
 
-function setUpHtml(sensors, logics){
-    const sensorsProps = Object.keys(sensors);
-    let sensorsHtml = "";
-    sensorsProps.forEach((sensor)=>{
-        sensorsHtml += `
-            <div>
-                <span>${sensor}: </span>
-                <span>${sensors[sensor]} </span>
-            </div>            
-        `
-    });
-    sensorsContainer.innerHTML = sensorsHtml;
+function setUpApp(fbData){
+    const topTankContainer = document.querySelector('.topTankContainer');
+    const interlocksContainer = document.querySelector('.interlocksContainer');
+    const motorContainer = document.querySelector('.motorContainer');
+    const callBtnContainer = document.querySelector('.callBtnContainer');
 
-    const logicsProps = Object.keys(logics);
-    let logicsHtml = "";
-    logicsProps.forEach((sensor)=>{
-        logicsHtml += `
-            <div>
-                <span>${sensor}: </span>
-                <span>${logics[sensor]} </span>
-            </div>            
-        `
-    });
-    logicsContainer.innerHTML = logicsHtml;
+    const topTank_LL = fbData.topTank_LL;
+    const topTank_HL = fbData.topTank_HL;
+    const topTankDemand = fbData.topTank_demand;
 
-    let operationsHtml = "<button class='callingBell'>Calling Bell</button>";
-    operationsContainer.innerHTML = operationsHtml;
-    operationsContainer.querySelector('.callingBell').onclick = ()=>{
-        if(sensors.topTankLL & !sensors.topTankHL) fbUpdate(ref(db, "/logics"), !logics.topDemand);
+    topTankContainer.innerHTML = `
+        <div class="section">
+            <div class='heading'>Top Tank:</div>
+            <div class='key'>
+                <span class='tittle'>Low Level:</span>
+                <span class='value'> ${topTank_LL}</span>
+            </div>
+            <div class='key'>
+                <span class='tittle'>High Level:</span>
+                <span class='value'> ${topTank_HL}</span>
+            </div>
+        </div>
+    `;
+
+    interlocksContainer.innerHTML = `
+        <div class="section">
+            <div class='heading'>Interlocks:</div>
+            <div class='key'>
+                <span class='tittle'>Top Tank Demand:</span>
+                <span class='value'> ${topTankDemand}</span>
+            </div>
+            <div class='key'>
+                <span class='tittle'>Bottom Tank Low Level:</span>
+                <span class='value'> ${fbData.bottomTank_LL}</span>
+            </div>
+        </div>
+    `;
+
+    motorContainer.innerHTML = `
+        <div class="section">
+            <div class='heading'>Motor: <span class="motorState">${fbData.motor}</span></div>
+            <div class='key'>
+                <span class='tittle'>Discharging:</span>
+                <span class='value'> ${fbData.discharging}</span>
+            </div>
+            <div class='key'>
+                <span class='tittle'>Trip:</span>
+                <span class='value tripValue'> ${fbData.trip}</span>
+            </div>
+        </div>
+    `;
+
+    callBtnContainer.innerHTML = "<button class='callingBell'>Calling Bell</button>";
+    callBtnContainer.querySelector('.callingBell').onclick = ()=>{
+        fbUpdate(topTank_LL, topTank_HL, topTankDemand);
     }
+    
+    if(fbData.trip){
+        const tripSpan = document.querySelector('.tripValue');
+        tripSpan.classList.add('tripped');
+        let visibility = true;
+        setInterval(()=>{
+            visibility = !visibility;
+            if(visibility){
+                tripSpan.style.visibility = "visible";
+            }else{
+                tripSpan.style.visibility = "hidden";
+            }
+        }, 500);
+    } 
 }
 
-async function fbUpdate(fbRef, myVal){
-    await update(fbRef, {
-        topDemand : myVal,
+async function fbUpdate(topTank_LL, topTank_HL, topTankDemand){
+    if(topTank_LL && !topTank_HL) topTankDemand = !topTankDemand;
+    await update(dataRef, {
+        topTank_demand : topTankDemand,
         trip : false
-    });
+    })
 }

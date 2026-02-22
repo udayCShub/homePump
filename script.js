@@ -69,7 +69,8 @@ function setUpHtml(sensors, logics){
     let operationsHtml = "<button class='callingBell'>Calling Bell</button>";
     operationsContainer.innerHTML = operationsHtml;
     operationsContainer.querySelector('.callingBell').onclick = ()=>{
-        if(sensors.topTankLL & !sensors.topTankHL) fbUpdate(ref(db, "/logics"), !logics.topDemand)
+        if(sensors.topTankLL & !sensors.topTankHL) fbUpdate(ref(db, "/logics"), !logics.topDemand);
+        alert();
     }
 }
 

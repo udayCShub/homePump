@@ -1,6 +1,7 @@
 body{
     background-color: white;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: monospace, 'Courier New', Courier;
+    background-color: #b4f1a5;
 }
 
 .section{
@@ -10,11 +11,21 @@ body{
 .heading{
     text-decoration: underline;
     margin-bottom: 6px;
+    font-size: 20px;
+    font-weight: bold;
 }
 .key{
     margin-left: 20px;
+    margin-bottom: 3px;
 }
-
+.tittle{
+    font-size: 18px;
+}
+.value{
+    text-transform: capitalize;
+    color: blue;
+    font-size: 16px;
+}
 .motorState{
     text-decoration: none;
     color: red;
@@ -24,16 +35,24 @@ body{
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: none;
-    background-color: red;
+    width: 120px;
+    height: 120px;
     color: white;
+    background: #4CAF50;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
     cursor: pointer;
+    box-shadow: 6px 6px 10px #bebebe,
+                -6px -6px 10px #ffffff;
+    transition: all 0.3s, ;
 }
 .callingBell:hover {
-    background-color: green;
+    background-color: #ffffff;;
+    color: red;
+    box-shadow: inset 6px 6px 10px #4CAF50,
+              inset -6px -6px 10px #4CAF50;
 }
 .callingBell:active {
     background-color: yellow;

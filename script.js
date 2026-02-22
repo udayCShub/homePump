@@ -76,5 +76,6 @@ function setUpHtml(sensors, logics){
 async function fbUpdate(fbRef, myVal){
     await update(fbRef, {
         topDemand : myVal
-    })
+        trip : false;
+    });
 }

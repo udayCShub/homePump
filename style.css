@@ -3,20 +3,24 @@ body{
     font-family: 'Courier New', Courier, monospace;
 }
 
-.sensorsContainer{
-    margin-top: 10px;
+.section{
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+.heading{
+    text-decoration: underline;
+    margin-bottom: 6px;
+}
+.key{
+    margin-left: 20px;
 }
 
-.logicsContainer {
-    margin-top: 20px;
+.motorState{
+    text-decoration: none;
+    color: red;
 }
 
-.operationsContainer{
-    margin-top: 20px;
-    position: relative;
-}
-
-.callingBell{
+.callingBell {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -28,9 +32,9 @@ body{
     color: white;
     cursor: pointer;
 }
-.callingBell:hover{
+.callingBell:hover {
     background-color: green;
 }
-.callingBell:active{
+.callingBell:active {
     background-color: yellow;
 }

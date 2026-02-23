@@ -33,7 +33,7 @@ signInWithEmailAndPassword(auth, "udayuvrohit@gmail.com", "287143")
 
         ledBtn.onclick = async ()=>{
             await update(dataRef, {
-                ledOn = !fbData.ledOn
+                ledOn : !fbData.ledOn
             })
         }
         

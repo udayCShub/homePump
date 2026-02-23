@@ -20,6 +20,27 @@ const db = getDatabase(app);
 const auth = getAuth(app);
 
 const dataRef = ref(db, "/all");
+const pswrdForm = document.querySelector('.pswrdForm');
+pswrdForm.onubmit = (e)=>{
+    e.preventDefault();
+    const pswrd = document.querySelector('.pswrdInput').value;
+    
+    signInWithEmailAndPassword(auth, "udayuvrohit@gmail.com", pswrd)
+        .then(() => {
+            console.log("Logged in");
+            pswrdForm.style.display = 'none';
+            document.querySelector('.infoContainer').style.display = "block";
+            onValue(dataRef, (snapshot) => {
+                const fbData = snapshot.val()
+                setUpApp(fbData);
+            });
+    })
+        .catch((error) => {
+            console.log(error.message);
+            alert('wrong password');
+    });
+}
+
 
 signInWithEmailAndPassword(auth, "udayuvrohit@gmail.com", "fantasy@12")
 .then(() => {

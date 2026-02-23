@@ -41,20 +41,6 @@ pswrdForm.onubmit = (e)=>{
     });
 }
 
-
-signInWithEmailAndPassword(auth, "udayuvrohit@gmail.com", "fantasy@12")
-.then(() => {
-    console.log("Logged in");
-    onValue(dataRef, (snapshot) => {
-        const fbData = snapshot.val()
-        setUpApp(fbData);
-    });
-})
-.catch((error) => {
-    console.log(error.message);
-});
-
-
 function setUpApp(fbData){
     const topTankContainer = document.querySelector('.topTankContainer');
     const interlocksContainer = document.querySelector('.interlocksContainer');

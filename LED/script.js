@@ -3,6 +3,8 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase
 import { getDatabase, ref, onValue, update} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-database.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 
+alert();
+
 const firebaseConfig = {
     apiKey: "AIzaSyB3Of2--PqGb_fyrdm6vCe_TDKejRmTAac",
     authDomain: "pump-12bac.firebaseapp.com",

@@ -31,6 +31,7 @@ signInWithEmailAndPassword(auth, "udayuvrohit@gmail.com", "287143")
           ledBtn.style.backgroundColor = "white";
         }
         ledBtn.onclick = async ()=>{
+            alert();
             await update(dataRef, {
                 ledOn : !fbData.ledOn
             })

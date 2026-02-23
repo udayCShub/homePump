@@ -30,6 +30,12 @@ signInWithEmailAndPassword(auth, "udayuvrohit@gmail.com", "287143")
         }else{
           ledBtn.style.backgroundColor = "white";
         }
+
+        ledBtn.onclick = async ()=>{
+            await update(dataRef, {
+                ledOn = !fbData.ledOn
+            })
+        }
         
     });
 })

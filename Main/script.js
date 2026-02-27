@@ -84,28 +84,38 @@ function setUpApp(fbData){
             </div>
             <div class='key'>
                 <span class='tittle'>Bottom Tank Low Level:</span>
-                <span class='value'> ${fbData.bottomTank_LL}</span>
+                <span class='value'> ${fbData.sunp_level}</span>
             </div>
         </div>
     `;
 
     motorContainer.innerHTML = `
         <div class="section">
-            <div class='heading'>Motor: <span class="motorState">${fbData.motor}</span></div>
+            <div class='heading'>Motor: <span class="motorState">${fbData.motorOn}</span></div>
             <div class='key'>
                 <span class='tittle'>Discharging:</span>
-                <span class='value'> ${fbData.discharging}</span>
+                <span class='value'> ${fbData.discharge}</span>
             </div>
             <div class='key'>
                 <span class='tittle'>Trip:</span>
                 <span class='value tripValue'> ${fbData.trip}</span>
+            </div>
+            <div class='key'>
+                <span class='tittle'>Force:</span>
+                <span class='value forceValue'> ${fbData.force}</span>
             </div>
         </div>
     `;
 
     callBtnContainer.innerHTML = "<button class='callingBell'>Calling Bell</button>";
     callBtnContainer.querySelector('.callingBell').onclick = ()=>{
-        fbUpdate(topTank_LL, topTank_HL, topTankDemand);
+        set(ref(database, 'all/force'), true)
+        .then(() => {
+          console.log("Data written successfully!");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
     
     if(fbData.trip){
@@ -120,14 +130,8 @@ function setUpApp(fbData){
                 tripSpan.style.visibility = "hidden";
             }
         }, 500);
-    } 
+    }
 }
 
-async function fbUpdate(topTank_LL, topTank_HL, topTankDemand){
-    if(topTank_LL && !topTank_HL) topTankDemand = !topTankDemand;
-    await update(dataRef, {
-        topTank_demand : topTankDemand,
-        trip : false
-    })
-}
+
 

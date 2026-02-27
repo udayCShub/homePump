@@ -108,16 +108,17 @@ function setUpApp(fbData){
     `;
 
     callBtnContainer.innerHTML = "<button class='callingBell'>Calling Bell</button>";
-    callBtnContainer.querySelector('.callingBell').onclick = ()=>{
-        set(ref(database, 'all/force'), true)
-        .then(() => {
-          console.log("Data written successfully!");
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-    
+    callBtnContainer.querySelector('.callingBell').onclick = async () => {
+        try {
+            await update(ref(db, 'all'), {
+                force: true
+            });
+            console.log("Force set to true");
+        } catch (error) {
+            console.error(error);
+        }
+    };
+        
     if(fbData.trip){
         const tripSpan = document.querySelector('.tripValue');
         tripSpan.classList.add('tripped');
